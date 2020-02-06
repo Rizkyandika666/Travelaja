@@ -190,7 +190,7 @@
               <div class="collapse" id="pesawat">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item">
-                    <a href="#" class="nav-link">Data Pesawat</a>
+                    <a href="{{ url('/p_pesawat') }}" class="nav-link">Data Pesawat</a>
                   </li>
                   <li class="nav-item">
                     <a href="{{ url('/p_bandara') }}" class="nav-link">Data Bandara</a>
@@ -225,18 +225,6 @@
               <a href="" class="nav-link">
                 <i class="menu-icon typcn typcn-document-text"></i>
                 <span class="menu-title">Laporan</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url('/ajax_crud') }}" class="nav-link">
-                <i class="menu-icon typcn typcn-document-text"></i>
-                <span class="menu-title">Crud Ajax</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url('/ajax_product') }}" class="nav-link">
-                <i class="menu-icon typcn typcn-document-text"></i>
-                <span class="menu-title">Ajax Product</span>
               </a>
             </li>
           </ul>

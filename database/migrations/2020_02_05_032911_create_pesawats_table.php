@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAirportsTable extends Migration
+class CreatePesawatsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateAirportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('airports', function (Blueprint $table) {
+        Schema::create('pesawats', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('town_id')->unsigned();
-            $table->foreign('town_id')->references('id')->on('towns')->onDelete('cascade');
-            $table->string('nama_bandara');
-            $table->string('kode');
+            $table->string('nama_pesawat');
+            $table->string('partner');
+            $table->string('kode_pesawat');
+            $table->float('harga');
+            $table->integer('kursi_ekonomi');
+            $table->integer('kursi_bisnis');
+            $table->integer('kursi_vip');
             $table->string('status');
             $table->timestamps();
         });
@@ -31,6 +34,6 @@ class CreateAirportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('airports');
+        Schema::dropIfExists('pesawats');
     }
 }

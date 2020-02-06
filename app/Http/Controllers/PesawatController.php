@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
-use Illuminate\Http\Request;
+use App\Pesawat;
 use DataTables;
+use Illuminate\Http\Request;
 
-class ProductAjaxController extends Controller
+class PesawatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +16,13 @@ class ProductAjaxController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            $data = Product::latest()->get();
+            $data = Pesawat::latest()->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct"><i class="mdi mdi-pen"></i></a>';
-                        $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="delete btn btn-danger btn-sm deleteProduct"><i class="mdi mdi-delete"></i></a>';
-                        return $btn;
+                       $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editPesawat"><i class="mdi mdi-pen"></i></a>';
+                        $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="delete btn btn-danger btn-sm deletePesawat"><i class="mdi mdi-delete"></i></a>';
+                        return $btn;  
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -39,6 +39,10 @@ class ProductAjaxController extends Controller
         //
     }
 
+    public function page_pesawat(){
+        return view('layouts.p_pesawat');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -47,10 +51,18 @@ class ProductAjaxController extends Controller
      */
     public function store(Request $request)
     {
-        Product::updateOrCreate(['id' => $request->product_id],
-        ['name' => $request->name, 'detail' => $request->detail]);
+       Pesawat::updateOrCreate(['id' => $request->id_pesawat],
+        [
+            'nama_pesawat'  => $request->nama_pesawat,
+            'partner'  => $request->partner,
+            'kode_pesawat'  => $request->kode_pesawat,
+            'harga'  => $request->harga,
+            'kursi_ekonomi'  => $request->kursi_ekonomi,
+            'kursi_bisnis'  => $request->kursi_bisnis,
+            'kursi_vip'  => $request->kursi_vip,
+            'status'  => $request->status]);
 
-        return response()->json(['success' => 'Product saved successfully']);
+       return response()->json(['success' => 'Data saved']);
     }
 
     /**
@@ -72,8 +84,8 @@ class ProductAjaxController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
-        return response()->json($product);
+        $pesawat = Pesawat::find($id);
+        return response()->json($pesawat);
     }
 
     /**
@@ -96,8 +108,8 @@ class ProductAjaxController extends Controller
      */
     public function destroy($id)
     {
-        Product::find($id)->delete();
+        Pesawat::find($id)->delete();
 
-        return response()->json(['success' => 'Product deleted successfully']);
+        return response()->json(['Success' => 'Date deleted']);
     }
 }

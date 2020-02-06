@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Airport;
+use App\Town;
 use DataTables;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,10 @@ class BandaraController extends Controller
     }
 
     public function page_bandara(){
-        return view('layouts.p_bandara');
+        $towns = Town::all();
+        // dd($town);
+
+        return view('layouts.p_bandara')->with('towns', $towns);
     }
 
     /**
@@ -50,10 +54,12 @@ class BandaraController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+
         Airport::updateOrCreate(['id' => $request->id_bandara],
-        [   'nama_bandara'  => $request->nama_bandara,
-            'kota'  => $request->kota,
+        [   
+            'town_id'  => $request->town_id,
+            'nama_bandara'  => $request->nama_bandara,
             'kode'  => $request->kode,
             'status'  => $request->status]);
 

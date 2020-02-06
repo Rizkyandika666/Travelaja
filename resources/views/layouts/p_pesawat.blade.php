@@ -2,9 +2,9 @@
 
 @section('content')
 	{{-- table --}}
-	<div class="col-lg-12 grid-margin stretch-card">
+	<div class="col-lg-12">
 		<div class="card">
-			<h2 class="text-center mt-5">Data Bandara</h2>
+			<h2 class="text-center mt-5">Data Pesawat</h2>
 			<div class="card-body">
 				<a href="javascript:void(0)" class="btn btn-icons btn-primary btn-sm mb-3 ml-3" id="createNewData">
 					<i class="mdi mdi-plus"></i>
@@ -14,11 +14,11 @@
 						<thead class="thead-dark">
 							<tr>
 								<th width="5%">No</th>
-								<th>Nama Bandara</th>
-								{{-- <th>Kota</th> --}}
+								<th>Nama Pesawat</th>
 								<th>Kode</th>
+								<th>Harga</th>
 								<th>Status</th>
-								<th width="25%">Action</th>
+								<th width="20%">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -29,39 +29,58 @@
 			</div>
 		</div>
 	</div>
-	{{-- end table --}}
+	{{-- end of table --}}
 
 	{{-- modal form --}}
 	<div class="modal fade" id="ajaxModal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="modelHeading"></h4>
+					<h4 class="modal-title" id="modalHeading"></h4>
 				</div>
 				<div class="modal-body">
 					<form id="FormData" name="FormData" class="form-horizontal">
-						<input type="hidden" name="id_bandara" id="id_bandara">
+						<input type="hidden" name="id_pesawat" id="id_pesawat">
 						<div class="form-group">
-							<label for="nama_bandara" class="col-sm-5 control-label">Nama Bandara</label>
+							<label for="nama_pesawat" class="col-sm-5 control-label">Nama Pesawat</label>
 							<div class="col-sm-12">
-								<input type="text" class="form-control" name="nama_bandara" id="nama_bandara" placeholder="Nama bandara" required="true">
+								<input type="text" name="nama_pesawat" id="nama_pesawat" placeholder="Nama Pesawat" class="form-control" required="true">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="kota" class="col-sm-5 control-label">Kota</label>
+							<label for="partner" class="col-sm-5 control-label">Partner</label>
 							<div class="col-sm-12">
-								<select id="town_id" name="town_id" class="form-control">
-									<option>Pilih kota</option>
-									@foreach($towns as $town)
-										<option value="{{ $town->id }}">{{ $town->nama_kota }}</option>
-									@endforeach
-								</select>
+								<input type="text" name="partner" id="partner" value="Maskapai" class="form-control" required="true" readonly="true">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="kode" class="col-sm-5 control-label">Kode Bandara</label>
+							<label for="kode_pesawat" class="col-sm-5 control-label">Kode Pesawat</label>
 							<div class="col-sm-12">
-								<input type="text" class="form-control" name="kode" id="kode" placeholder="Kode bandara" required="true">
+								<input type="text" name="kode_pesawat" id="kode_pesawat" placeholder="Kode Pesawat" class="form-control" required="true">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="harga" class="col-sm-5 control-label">Harga</label>
+							<div class="col-sm-12">
+								<input type="text" name="harga" id="harga" placeholder="Harga" class="form-control" required="true">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="kursi_ekonomi" class="col-sm-5 control-label">Kursi Ekonomi</label>
+							<div class="col-sm-12">
+								<input type="text" name="kursi_ekonomi" id="kursi_ekonomi" placeholder="Kursi ekonomi" class="form-control" required="true">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="kursi_bisnis" class="col-sm-5 control-label">Kursi bisnis</label>
+							<div class="col-sm-12">
+								<input type="text" name="kursi_bisnis" id="kursi_bisnis" placeholder="Kursi bisnis" class="form-control" required="true">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="kursi_vip" class="col-sm-5 control-label">Kursi Vip</label>
+							<div class="col-sm-12">
+								<input type="text" name="kursi_vip" id="kursi_vip" placeholder="Kursi vip" class="form-control" required="true">
 							</div>
 						</div>
 						<div class="form-group">
@@ -84,7 +103,6 @@
 		</div>
 	</div>
 	{{-- end modal form --}}
-	
 	@section('script')
 		<script type="text/javascript">
 			$(function(){
@@ -95,35 +113,38 @@
 				});
 			});
 
+
 			$('#createNewData').click(function(){
-				$('#saveBtn').val("create-bandara");
 				$('#ajaxModal').modal('show');
-				$('#FormData').trigger("reset");
-				$('#modelHeading').html("Tambah Bandara");
+				$('#modalHeading').html("Tambah Pesawat");
 			});
 
 			var table = $('.data-table').DataTable({
 				processing: true,
 				serverSide: true,
-				ajax: "{{ route('data_bandara.index') }}",
+				ajax: "{{ route('data_pesawat.index') }}",
 				columns: [
 					{data: 'DT_RowIndex', name: 'DT_RowIndex'},
-					{data: 'nama_bandara', name: 'nama_bandara'},
-					// {data: 'town_id', name: 'town_id'},
-					{data: 'kode', name: 'kode'},
+					{data: 'nama_pesawat', name: 'nama_pesawat'},
+					{data: 'kode_pesawat', name: 'kode_pesawat'},
+					{
+						data: 'harga', 
+						name: 'harga',
+						render: $.fn.dataTable.render.number( ',', '.', 3, 'Rp' )
+					},
 					{data: 'status', name: 'status'},
 					{data: 'action', name: 'action', orderable: false, searchable: false},
 				]
 			});
 
-			 $('#saveBtn').click(function(e){
+			$('#saveBtn').click(function(e){
 				e.preventDefault();
 				// var str = $('#FormData').serialize();
 				// console.log(str);
 
 				$.ajax({
 					data: $('#FormData').serialize(),
-					url: "{{ route('data_bandara.store') }}",
+					url: "{{ route('data_pesawat.store') }}",
 					type: 'POST',
 					dataType: 'json',
 					success: function(data){
@@ -142,22 +163,25 @@
 				});
 			});
 
-			$('body').on('click', '.editAirport', function() {
-		      var id_bandara = $(this).data('id');
-		      $.get("{{ route('data_bandara.index') }}" +'/' + id_bandara +'/edit', function (data) {
+			$('body').on('click', '.editPesawat', function() {
+		      var id_pesawat = $(this).data('id');
+		      $.get("{{ route('data_pesawat.index') }}" +'/' + id_pesawat +'/edit', function (data) {
 		      	// console.log(data);
-		          $('#modelHeading').html("Edit Product");
+		          $('#modalHeading').html("Edit Pesawat");
 		          $('#saveBtn').val("edit-user");
 		          $('#ajaxModal').modal('show');
-		          $('#id_bandara').val(data.id);
-		          $('#nama_bandara').val(data.nama_bandara);
-		          $('#town_id').val(data.town_id);
-		          $('#kode').val(data.kode);
+		          $('#id_pesawat').val(data.id);
+		          $('#nama_pesawat').val(data.nama_pesawat);
+		          $('#kode_pesawat').val(data.kode_pesawat);
+		          $('#harga').val(data.harga);
+		          $('#kursi_ekonomi').val(data.kursi_ekonomi);
+		          $('#kursi_bisnis').val(data.kursi_bisnis);
+		          $('#kursi_vip').val(data.kursi_vip);
 		          $('#status').val(data.status);
 		      })
 		   });
 
-			$('body').on('click', '.deleteAirport', function(){
+			$('body').on('click', '.deletePesawat', function(){
 				var id_bandara = $(this).data("id");
 
 				swal({
@@ -171,7 +195,7 @@
 						if(willDelete){
 							$.ajax({
 								type: "DELETE",
-								url: "{{ route('data_bandara.store') }}" +'/'+id_bandara,
+								url: "{{ route('data_pesawat.store') }}" +'/'+id_bandara,
 								success:function(data){
 									table.draw();
 								},
@@ -192,5 +216,4 @@
 				});
 		</script>
 	@endsection
-
 @endsection
