@@ -22,6 +22,7 @@ Route::get('/d_partner','PartnerController@page_partner');
 Route::get('/d_petugas','OfficerController@page_officer');
 Route::get('/p_bandara','BandaraController@page_bandara');
 Route::get('/p_pesawat','PesawatController@page_pesawat');
+Route::get('/rute', 'RuteController@page_rute');
 Route::post('/d_user','MasterController@store');
 
 // coba crud ajax
@@ -31,6 +32,7 @@ Route::resource('data_petugas', 'OfficerController');
 Route::resource('data_partner', 'PartnerController');
 Route::resource('data_bandara', 'BandaraController');
 Route::resource('data_pesawat', 'PesawatController');
+Route::resource('rute_pesawat', 'RuteController');
 // Route::get('ajax_crud','AjaxController@index');
 
 // data dummy

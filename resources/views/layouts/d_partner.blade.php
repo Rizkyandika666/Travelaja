@@ -118,7 +118,7 @@
 	                  	data: 'image', 
 	                  	name: 'image', 
 	                  	render: function(data, type, full, meta){
-					     return "<img src={{ URL::to('/') }}/images/" + data + " width='90' class='img-thumbnail' />";
+					     return "<img src={{ URL::to('/') }}/images/" + data + " width='150' class='img-thumbnail' />";
 					   },
 					    orderable: false},
 	                  {

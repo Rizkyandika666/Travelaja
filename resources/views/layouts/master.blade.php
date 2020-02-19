@@ -216,7 +216,7 @@
               </div>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="{{ url('/rute') }}" class="nav-link">
                 <i class="menu-icon typcn typcn-document-text"></i>
                 <span class="menu-title">Jadwal Rute</span>
               </a>
