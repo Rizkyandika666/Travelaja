@@ -14,5 +14,9 @@ class Town extends Model
 
 	public function airports(){
 		return $this->hasMany(Airport::class);
-	}   
+	} 
+
+	public function stasiuns(){
+		return $this->hasMany(Stasiun::class);
+	}  
 }

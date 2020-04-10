@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Pesawat;
+use App\Kereta;
 use DataTables;
 use Illuminate\Http\Request;
 
-class PesawatController extends Controller
+class KeretaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,17 +16,21 @@ class PesawatController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            $data = Pesawat::latest()->get();
+            $data = Kereta::latest()->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                       $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editPesawat"><i class="mdi mdi-pen"></i></a>';
-                        $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="delete btn btn-danger btn-sm deletePesawat"><i class="mdi mdi-delete"></i></a>';
+                       $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editKereta"><i class="mdi mdi-pen"></i></a>';
+                        $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="delete btn btn-danger btn-sm deleteKereta"><i class="mdi mdi-delete"></i></a>';
                         return $btn;  
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
+    }
+
+    public function page_kereta(){
+        return view('layouts.k_kereta');
     }
 
     /**
@@ -39,10 +43,6 @@ class PesawatController extends Controller
         //
     }
 
-    public function page_pesawat(){
-        return view('layouts.p_pesawat');
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -51,11 +51,11 @@ class PesawatController extends Controller
      */
     public function store(Request $request)
     {
-       Pesawat::updateOrCreate(['id' => $request->id_pesawat],
+        Kereta::updateOrCreate(['id' => $request->id_kereta],
         [
-            'nama_pesawat'  => $request->nama_pesawat,
+            'nama_kereta'  => $request->nama_kereta,
             'partner'       => $request->partner,
-            'kode_pesawat'  => $request->kode_pesawat,
+            'kode_kereta'  => $request->kode_kereta,
             'harga'         => $request->harga,
             'kursi_ekonomi' => $request->kursi_ekonomi,
             'kursi_bisnis'  => $request->kursi_bisnis,
@@ -84,8 +84,8 @@ class PesawatController extends Controller
      */
     public function edit($id)
     {
-        $pesawat = Pesawat::find($id);
-        return response()->json($pesawat);
+        $kereta = Kereta::find($id);
+        return response()->json($kereta);
     }
 
     /**
@@ -108,8 +108,8 @@ class PesawatController extends Controller
      */
     public function destroy($id)
     {
-        Pesawat::find($id)->delete();
+        Kereta::find($id)->delete();
 
-        return response()->json(['Success' => 'Date deleted']);
+        return response()->json(['Success'  => 'Data deleted']);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\Role;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -53,6 +54,10 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            // 'telepon' => ['required', 'numeric', 'min:11'],
+            // 'jenis_kelamin' => ['required', 'string', 'max:20'],
+            // 'alamat' => ['required', 'string'],
+            // 'no_ktp' => ['required', 'numeric',]
         ]);
     }
 
@@ -64,10 +69,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        // dd(array($data));
+        // $userRole    = Role::where('name','user')->first();
+        $userRole    = Role::find(2);
+        // $user = User::find(2);
+        // $user->roles()->attach(2);
+        // dd($user->roles);
+
+        return  $user = User::create([
+            'name'            => $data['name'],
+            'email'           => $data['email'],
+            'password'        => Hash::make($data['password']),
+            'telepon'         => $data['telepon'],
+            'jenis_kelamin'   => $data['jenis_kelamin'],
+            'alamat'          => $data['alamat'],
+            'no_ktp'          => $data['no_ktp']
         ]);
+        $user->roles()->attach(2);
     }
 }

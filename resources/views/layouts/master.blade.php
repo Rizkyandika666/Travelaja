@@ -28,7 +28,7 @@
   <div class="container-scroller">
      <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-          <a class="navbar-brand brand-logo" href="index.html">
+          <a class="navbar-brand brand-logo" href="{{ url('/') }}">
             <!-- <img src="../assets/images/logo.svg" alt="logo" /> </a> -->
             | TravelAja
           <a class="navbar-brand brand-logo-mini" href="index.html">
@@ -36,7 +36,7 @@
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
+           {{--  <li class="nav-item dropdown">
               <a class="nav-link count-indicator" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <i class="mdi mdi-bell-outline"></i>
                 <span class="count">7</span>
@@ -72,7 +72,7 @@
                   </div>
                 </a>
               </div>
-            </li>
+            </li> --}}
             <li class="nav-item dropdown">
               <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-toggle="dropdown">
                 <i class="mdi mdi-email-outline"></i>
@@ -118,11 +118,15 @@
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                 <div class="dropdown-header text-center">
                   <img class="img-md rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image">
-                  <p class="mb-1 mt-3 font-weight-semibold">Rizky Andika</p>
-                  <p class="font-weight-light text-muted mb-0">rizkyandika253@gmail.com</p>
+                  <p class="mb-1 mt-3 font-weight-semibold">{{Auth::user()->name}}</p>
+                  <p class="font-weight-light text-muted mb-0">{{ Auth::user()->email }}</p>
                 </div>
                 <a class="dropdown-item">My Profile <span class="badge badge-pill badge-danger">1</span><i class="dropdown-item-icon ti-dashboard"></i></a>
-                <a class="dropdown-item">Sign Out<i class="dropdown-item-icon ti-power-off"></i></a>
+                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();">Sign Out<i class="dropdown-item-icon ti-power-off"></i></a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
               </div>
             </li>
           </ul>
@@ -143,8 +147,8 @@
                     <div class="dot-indicator bg-success"></div>
                 </div>
                 <div class="text-wrapper">
-                  <p class="profile-name">Rizky Andika</p>
-                  <p class="designation">Admin</p>
+                  <p class="profile-name">{{ Auth::user()->name }}</p>
+                  <p class="designation">kosong</p>
                 </div>
               </a>
             </li>
@@ -207,10 +211,10 @@
               <div class="collapse" id="kereta_api">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item">
-                    <a href="#" class="nav-link">Data Kereta</a>
+                    <a href="{{ url('/k_kereta') }}" class="nav-link">Data Kereta</a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">Data Stasiun</a>
+                    <a href="{{ url('/k_stasiun') }}" class="nav-link">Data Stasiun</a>
                   </li>
                 </ul>
               </div>
@@ -233,6 +237,76 @@
         <!-- mainpanel -->
         <div class="main-panel">
           <div class="content-wrapper">
+            {{-- <div class="row">
+              <div class="col-md-6 grid-margin stretch-card">
+                <div class="card"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                  <div class="card-body pb-0">
+                    <div class="d-flex justify-content-between">
+                      <h4 class="card-title mb-0">Statistik Penumpang</h4>
+                      <p class="font-weight-semibold mb-0">+1.37%</p>
+                    </div>
+                    <h3 class="font-weight-medium mb-4">184.42K</h3>
+                  </div>
+                  <canvas class="mt-n4 chartjs-render-monitor" height="90" id="total-revenue" width="323" style="display: block;">
+                </canvas></div>
+              </div>
+              <div class="col-md-6 grid-margin stretch-card">
+                <div class="card"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                  <div class="card-body pb-0">
+                    <div class="d-flex justify-content-between">
+                      <h4 class="card-title mb-0">Jumlah Pesanan</h4>
+                      <p class="font-weight-semibold mb-0">-2.87%</p>
+                    </div>
+                    <h3 class="font-weight-medium">147.7K</h3>
+                  </div>
+                  <canvas class="mt-n3 chartjs-render-monitor" height="90" id="total-transaction" width="323" style="display: block;">
+                </canvas></div>
+              </div>
+              <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="d-flex align-items-center pb-2">
+                          <div class="dot-indicator bg-danger mr-2"></div>
+                          <p class="mb-0">Active Admin</p>
+                        </div>
+                        <h4 class="font-weight-semibold">10</h4>
+                        <div class="progress progress-md">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10"></div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mt-4 mt-md-0">
+                        <div class="d-flex align-items-center pb-2">
+                          <div class="dot-indicator bg-success mr-2"></div>
+                          <p class="mb-0">Active Users</p>
+                        </div>
+                        <h4 class="font-weight-semibold">35</h4>
+                        <div class="progress progress-md">
+                          <div class="progress-bar bg-success" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="35"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 grid-margin stretch-card average-price-card">
+                <div class="card text-white">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between pb-2 align-items-center">
+                      <h2 class="font-weight-semibold mb-0">4,624</h2>
+                      <div class="icon-holder">
+                        <i class="mdi mdi-briefcase-outline"></i>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <h5 class="font-weight-semibold mb-0">Jumlah Ticket</h5>
+                      <p class="text-white mb-0">Since last month</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> --}}
             @yield('content')  
           </div>
         </div>
